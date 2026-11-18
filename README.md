@@ -6,10 +6,10 @@ A projekt célja, hogy magyar nyelvű hangutasításból Google Naptár-esemény
 
 ## Telepítés és indítás
 
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe .\src\fut.py
-Az első futtatáskor a program letölti a beszédfelismeréshez szükséges Whisper Medium modellfájljait
+- python -m venv .venv
+- .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+- .\.venv\Scripts\python.exe .\src\fut.py
+- Az első futtatáskor a program letölti a beszédfelismeréshez szükséges Whisper Medium modellfájljait
 
 ## A kód felépítése jelenleg
 

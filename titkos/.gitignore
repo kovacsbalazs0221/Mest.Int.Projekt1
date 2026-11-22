@@ -1,0 +1,3 @@
+# Ide kerül a credentials.json és a token.json. Ezek SOHA ne kerüljenek gitbe!
+*
+!.gitignore

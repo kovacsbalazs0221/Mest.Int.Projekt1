@@ -1,0 +1,18 @@
+# A naptáras lánc új függőségei (a meglévő requirements.txt mellé telepítendő):
+#   .\.venv\Scripts\python.exe -m pip install -r requirements.txt -r requirements_naptar.txt
+
+# 2. modell: szándékfelismerés (zero-shot, mDeBERTa)
+transformers>=5,<6
+torch>=2.9
+sentencepiece>=0.2
+
+# Google Naptár API
+google-api-python-client>=2.150
+google-auth-oauthlib>=1.2
+google-auth-httplib2>=0.2
+
+# Időzóna-adatbázis (Windows-on a zoneinfo-nak kell)
+tzdata
+
+# Tesztek
+pytest>=8

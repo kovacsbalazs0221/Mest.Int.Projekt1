@@ -1,0 +1,26 @@
+{
+  "referencia_ido": "2026-11-23T10:00:00",
+  "megjegyzes": "A referencia_ido hétfő 10:00. Az elvárt értékek ehhez képest értendők. A lista bővíthető; a valódi hangfelvételek átiratait is érdemes ide felvenni.",
+  "mondatok": [
+    {"szoveg": "Holnap délután háromkor megyek fogorvoshoz.", "szandek": "esemeny", "datum": "2026-11-24", "kezdes": "15:00"},
+    {"szoveg": "Jövő pénteken fél négykor megbeszélés a tanszéken Kovács tanár úrral.", "szandek": "esemeny", "datum": "2026-12-04", "kezdes": "15:30"},
+    {"szoveg": "November 25-én 15:30-kor konzultáció a projektről.", "szandek": "esemeny", "datum": "2026-11-25", "kezdes": "15:30"},
+    {"szoveg": "Szerdán 3-tól 5-ig labor a B épületben.", "szandek": "esemeny", "datum": "2026-11-25", "kezdes": "15:00"},
+    {"szoveg": "Emlékeztess, hogy ma este 8-kor hívjam fel anyát.", "szandek": "emlekezteto", "datum": "2026-11-23", "kezdes": "20:00"},
+    {"szoveg": "Két hét múlva vizsga délelőtt 10 órakor, két órás.", "szandek": "esemeny", "datum": "2026-12-07", "kezdes": "10:00"},
+    {"szoveg": "Kedden reggel 8:15-kor edzés az edzőteremben.", "szandek": "esemeny", "datum": "2026-11-24", "kezdes": "08:15"},
+    {"szoveg": "Holnapután délben ebéd Péterrel a menzán.", "szandek": "esemeny", "datum": "2026-11-25", "kezdes": "12:00"},
+    {"szoveg": "December 5-én Anna születésnapja.", "szandek": "esemeny", "datum": "2026-12-05", "kezdes": null},
+    {"szoveg": "Csütörtökön este hétkor mozi a barátaimmal.", "szandek": "esemeny", "datum": "2026-11-26", "kezdes": "19:00"},
+    {"szoveg": "Ne felejtsem el holnap reggel 7-kor bevenni a gyógyszert.", "szandek": "emlekezteto", "datum": "2026-11-24", "kezdes": "07:00"},
+    {"szoveg": "Szólj, hogy pénteken 10-kor be kell adni a beadandót.", "szandek": "emlekezteto", "datum": "2026-11-27", "kezdes": "10:00"},
+    {"szoveg": "Jövő héten kedden háromnegyed 8-kor orvosi vizsgálat.", "szandek": "esemeny", "datum": "2026-12-01", "kezdes": "07:45"},
+    {"szoveg": "Milyen idő lesz holnap?", "szandek": "egyeb", "datum": null, "kezdes": null},
+    {"szoveg": "Mesélj egy viccet.", "szandek": "egyeb", "datum": null, "kezdes": null},
+    {"szoveg": "Mennyi kétszer kettő?", "szandek": "egyeb", "datum": null, "kezdes": null},
+    {"szoveg": "Kapcsold fel a villanyt a nappaliban.", "szandek": "egyeb", "datum": null, "kezdes": null},
+    {"szoveg": "December 1-jén 9-kor fogadóóra a dékáni hivatalban.", "szandek": "esemeny", "datum": "2026-12-01", "kezdes": "09:00"},
+    {"szoveg": "Holnap 10-kor fél órás telefonos interjú.", "szandek": "esemeny", "datum": "2026-11-24", "kezdes": "10:00"},
+    {"szoveg": "Emlékeztess 30-án kettőkor, hogy fizessem be a lakbért.", "szandek": "emlekezteto", "datum": "2026-11-30", "kezdes": "14:00"}
+  ]
+}

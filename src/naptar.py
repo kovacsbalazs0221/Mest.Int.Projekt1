@@ -1,14 +1,3 @@
-"""
-Google Naptár: az ellenőrzött esemény létrehozása a Google Calendar API-val.
-
-Előkészítés (egyszer kell, részletesen: docs/BEALLITAS.md):
-  - Google Cloud projektben a Google Calendar API engedélyezése
-  - OAuth kliens (Asztali alkalmazás) létrehozása, a letöltött JSON-t
-    a titkos/credentials.json helyre kell menteni
-Az első futtatáskor böngészőben be kell jelentkezni; a kapott tokent
-a program a titkos/token.json fájlba menti (a titkos/ mappa nem kerül gitbe).
-"""
-
 from pathlib import Path
 
 GYOKER = Path(__file__).resolve().parent.parent
@@ -20,7 +9,6 @@ IDOZONA_NEV = "Europe/Budapest"
 
 
 def esemeny_torzs(e):
-    """Esemeny -> a Calendar API által várt JSON-szerkezet."""
     torzs = {"summary": e.cim}
     if e.helyszin:
         torzs["location"] = e.helyszin

@@ -1,0 +1,18 @@
+{
+  "referencia_ido": "2026-11-23T10:00:00",
+  "megjegyzes": "Független ellenőrző készlet: a szándékfelismerés hangolása után írtuk, a hangolásnál nem használtuk. A referencia_ido hétfő 10:00.",
+  "mondatok": [
+    {"szoveg": "Csütörtökön délután kettőkor fogadóóra Szabó tanárnőnél.", "szandek": "esemeny", "datum": "2026-11-26", "kezdes": "14:00"},
+    {"szoveg": "Holnap este hétkor születésnapi buli Daninál.", "szandek": "esemeny", "datum": "2026-11-24", "kezdes": "19:00"},
+    {"szoveg": "Péntek reggel 9-kor zh analízisből.", "szandek": "esemeny", "datum": "2026-11-27", "kezdes": "09:00"},
+    {"szoveg": "Jövő hétfőn 10-től 12-ig labor.", "szandek": "esemeny", "datum": "2026-11-30", "kezdes": "10:00"},
+    {"szoveg": "Emlékeztess holnap délben, hogy vegyek kenyeret.", "szandek": "emlekezteto", "datum": "2026-11-24", "kezdes": "12:00"},
+    {"szoveg": "Ne hagyd, hogy elfelejtsem kedden befizetni a kollégiumi díjat.", "szandek": "emlekezteto", "datum": "2026-11-24", "kezdes": null},
+    {"szoveg": "Szólj december 10-én reggel nyolckor, hogy hívjam fel a bankot.", "szandek": "emlekezteto", "datum": "2026-12-10", "kezdes": "08:00"},
+    {"szoveg": "Hány fok van most kint?", "szandek": "egyeb", "datum": null, "kezdes": null},
+    {"szoveg": "Játssz le valami zenét.", "szandek": "egyeb", "datum": null, "kezdes": null},
+    {"szoveg": "Mi a főváros Ausztráliában?", "szandek": "egyeb", "datum": null, "kezdes": null},
+    {"szoveg": "Mit főzzek ma vacsorára?", "szandek": "egyeb", "datum": null, "kezdes": null},
+    {"szoveg": "Köszönöm, ennyi volt.", "szandek": "egyeb", "datum": null, "kezdes": null}
+  ]
+}

@@ -17,11 +17,11 @@ def hangrogzit():
 
     print("A rögzítés elindult!")
 
-    hangadat = []                      # ide gyűjtjük a blokkokat
-    blokkmeret = int(M_frek * 0.1)     # 0,1 mp-es blokk
+    hangadat = []
+    blokkmeret = int(M_frek * 0.1)
 
     with sd.InputStream(samplerate=M_frek,
-                        channels=1, # ez a mono-t jelöli
+                        channels=1,
                         dtype='float32') as adatfolyam:
         while keyboard.is_pressed('space'):
             blokk, _ = adatfolyam.read(blokkmeret)

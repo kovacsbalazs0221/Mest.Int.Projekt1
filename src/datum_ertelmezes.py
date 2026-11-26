@@ -1,23 +1,3 @@
-"""
-Magyar nyelvű dátum- és időkifejezések szabályalapú értelmezése.
-
-Miért kell ez, ha van LLM?
-A kis, helyben futó nyelvi modellek gyakran hibáznak a naptári számolásban
-(pl. "jövő kedden" -> melyik dátum?). Ezért a dátumot és az időpontot
-elsősorban ez a determinisztikus modul számolja ki az átiratból, az LLM által
-adott értéket csak akkor használjuk, ha itt nem találunk semmit
-(lásd esemeny_osszeallitas.py).
-
-Kezelt kifejezések (példák):
-  dátum:  ma, holnap, holnapután, 3 nap múlva, egy hét múlva,
-          kedden, jövő pénteken, ezen a héten szerdán,
-          november 25-én, 2026. november 25., 11. 25., 2026-11-25, 25-én
-  idő:    15:30, 15.30-kor, 3-kor, háromkor, 15 órakor, 15 óra 30 perckor,
-          délután 3, este hétkor, fél 4, negyed 5, háromnegyed 8, délben
-  sáv:    3-tól 5-ig, 14:00-tól 15:30-ig, háromtól ötig
-  hossz:  két órás, másfél órás, 2 órán át, 45 perces, fél órás
-"""
-
 import re
 from dataclasses import dataclass, field
 from datetime import date, time, timedelta
@@ -75,10 +55,6 @@ class Ertelmezes:
     idotartam_perc: int | None = None
     megjegyzesek: list[str] = field(default_factory=list)
 
-
-# --------------------------------------------------------------------------
-# Dátum
-# --------------------------------------------------------------------------
 
 def _datum_evvel(ev, honap, nap, ma):
     """Ha nincs megadva év, és a dátum már elmúlt, a következő évre tesszük."""
@@ -168,10 +144,6 @@ def datum_keresese(szoveg, ma):
     return None
 
 
-# --------------------------------------------------------------------------
-# Időpont
-# --------------------------------------------------------------------------
-
 def _napszak(s):
     if re.search(r"\bdélután", s):
         return "délután"
@@ -258,10 +230,6 @@ def ido_keresese(szoveg):
     return None, None, [], megj
 
 
-# --------------------------------------------------------------------------
-# Időtartam
-# --------------------------------------------------------------------------
-
 def idotartam_keresese(szoveg):
     s = szoveg.lower()
     m = re.search(r"\b(másfél|háromnegyed|negyed|fél)\s*(órás|órán|órát|óra hossz|óráig)", s)
@@ -276,12 +244,7 @@ def idotartam_keresese(szoveg):
     return None
 
 
-# --------------------------------------------------------------------------
-# Összesítés
-# --------------------------------------------------------------------------
-
 def ertelmez(szoveg, ma):
-    """Az átiratból kiszedi a dátumot, az időpontot és az időtartamot."""
     e = Ertelmezes()
     e.datum = datum_keresese(szoveg, ma)
     e.kezdes, e.vege, talalatok, e.megjegyzesek = ido_keresese(szoveg)

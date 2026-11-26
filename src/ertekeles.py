@@ -1,20 +1,3 @@
-"""
-A lánc 2-4. lépésének kiértékelése a tests/teszt_mondatok.json mondatain.
-
-Lépésenként méri a pontosságot:
-  - szándékfelismerés (mDeBERTa)
-  - csak LLM: dátum és kezdés
-  - csak szabályalapú értelmező: dátum és kezdés
-  - végeredmény (ellenőrzés után): dátum és kezdés
-
-Így a dokumentációban számokkal megmutatható, mit hoz a saját ellenőrző lépés.
-
-Futtatás (a projekt gyökeréből):
-  python src/ertekeles.py                 # minden lépés (kell hozzá az Ollama)
-  python src/ertekeles.py --nincs-llm     # csak szándék + szabályalapú
-  python src/ertekeles.py --nincs-szandek
-"""
-
 import argparse
 import json
 from datetime import datetime
@@ -34,9 +17,11 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--nincs-llm", action="store_true")
     p.add_argument("--nincs-szandek", action="store_true")
+    p.add_argument("--fajl", default=str(FAJL), help="tesztmondatok JSON-fájlja")
+    p.add_argument("--mod", default="hibrid", choices=["hibrid", "hibrid3", "modell"])
     args = p.parse_args()
 
-    adat = json.loads(FAJL.read_text(encoding="utf-8"))
+    adat = json.loads(Path(args.fajl).read_text(encoding="utf-8"))
     most = datetime.fromisoformat(adat["referencia_ido"]).replace(tzinfo=IDOZONA)
     mondatok = adat["mondatok"]
 
@@ -55,7 +40,7 @@ def main():
         sor = f"- {szoveg}"
 
         if not args.nincs_szandek:
-            felismert, val, _ = szandek(szoveg)
+            felismert, val, _ = szandek(szoveg, args.mod)
             if felismert == m["szandek"]:
                 jo["szandek"] += 1
             else:
@@ -88,7 +73,7 @@ def main():
     def sor(nev, kulcs, n):
         print(f"  {nev:<34} {jo[kulcs]:>3}/{n}  ({jo[kulcs] / n:.0%})")
 
-    print(f"\nKiértékelés: {len(mondatok)} mondat, ebből {naptar_db} naptárbejegyzés\n")
+    print(f"\nKiértékelés ({Path(args.fajl).name}, szándék mód: {args.mod}): {len(mondatok)} mondat, ebből {naptar_db} naptárbejegyzés\n")
     if not args.nincs_szandek:
         sor("Szándékfelismerés", "szandek", len(mondatok))
     if not args.nincs_llm:

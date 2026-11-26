@@ -1,17 +1,3 @@
-"""
-Ellenőrzés és összevetés: az LLM kimenetéből és a szabályalapú
-dátumértelmezésből egy ellenőrzött, naptárba írható esemény lesz.
-
-Döntési szabályok:
-  1. A dátumot és az időpontot elsősorban a datum_ertelmezes.py adja
-     (determinisztikus, nem "hallucinál"); ha ott nincs találat, az LLM értéke jön.
-  2. Ha a kettő eltér, figyelmeztetést adunk, és a szabályalapút használjuk.
-  3. Ha nincs vége-időpont: időtartam (szabály -> LLM -> alapértelmezés).
-  4. Ha nincs időpont: egész napos esemény.
-  5. Ha nincs dátum, de van időpont: ma (ha még nem múlt el), különben holnap.
-  6. Múltbeli időpontra figyelmeztetünk.
-"""
-
 import re
 from dataclasses import dataclass, field
 from datetime import date, datetime, time, timedelta
@@ -66,7 +52,6 @@ def osszeallit(atirat, llm, most=None, szandek="esemeny"):
     szabaly = ertelmez(atirat, most.date())
     figy = list(szabaly.megjegyzesek)
 
-    # --- dátum ---
     llm_datum = _iso_datum(llm.get("datum"))
     if llm.get("datum") and llm_datum is None:
         figy.append(f"Az LLM érvénytelen dátumot adott: {llm.get('datum')!r}")
@@ -74,7 +59,6 @@ def osszeallit(atirat, llm, most=None, szandek="esemeny"):
     if szabaly.datum and llm_datum and szabaly.datum != llm_datum:
         figy.append(f"Eltérő dátum: szabály {szabaly.datum}, LLM {llm_datum}, a szabályalapút használom")
 
-    # --- időpont ---
     llm_kezdes, llm_vege = _ora_perc(llm.get("kezdes")), _ora_perc(llm.get("vege"))
     kezdes = szabaly.kezdes or llm_kezdes
     if szabaly.kezdes and llm_kezdes and szabaly.kezdes != llm_kezdes:
@@ -84,7 +68,6 @@ def osszeallit(atirat, llm, most=None, szandek="esemeny"):
         figy.append(f"A vége ({vege:%H:%M}) nem a kezdés után van, figyelmen kívül hagyom")
         vege = None
 
-    # --- időtartam ---
     llm_hossz = llm.get("idotartam_perc")
     llm_hossz = llm_hossz if isinstance(llm_hossz, int) and 0 < llm_hossz <= 24 * 60 else None
     hossz = szabaly.idotartam_perc or llm_hossz or ALAP_IDOTARTAM.get(szandek, 60)
@@ -97,7 +80,6 @@ def osszeallit(atirat, llm, most=None, szandek="esemeny"):
         else:
             hianyzik.append("datum")
 
-    # --- cím, helyszín, leírás ---
     cim = (llm.get("cim") or "").strip()
     if _ures(cim):
         cim = atirat.strip()[:50] or "Esemény"

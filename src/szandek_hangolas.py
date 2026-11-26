@@ -1,13 +1,3 @@
-"""
-A zero-shot szándékfelismerés hangolása: több hipotézis-megfogalmazást
-összemér a tests/teszt_mondatok.json mondatain, és kiírja a pontosságukat.
-
-Az mDeBERTa-XNLI többnyelvű, ezért magyar mondathoz angol hipotézist is
-lehet adni (cross-lingual NLI). A legjobb változatot a szandek.py használja.
-
-Futtatás: python src/szandek_hangolas.py
-"""
-
 import json
 from pathlib import Path
 

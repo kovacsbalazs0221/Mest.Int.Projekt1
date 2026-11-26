@@ -1,17 +1,3 @@
-"""
-3. modell: az esemény adatainak kinyerése nagy nyelvi modellel (LLM).
-
-A helyben futó Ollama szerverhez fordul (http://localhost:11434), és
-JSON-sémával kényszeríti, hogy a válasz pontosan a várt mezőket tartalmazza.
-
-Alapértelmezett modell: qwen2.5:7b (jól kezeli a magyar szöveget, ~4,7 GB).
-Másik modell: OLLAMA_MODELL környezeti változóval, pl. "llama3.1:8b" vagy
-gyengébb gépen "qwen2.5:3b".
-
-A dátum/idő mezőket az esemeny_osszeallitas.py ellenőrzi, és a saját
-szabályalapú értelmezőnk (datum_ertelmezes.py) eredményét előnyben részesíti.
-"""
-
 import json
 import os
 import urllib.error
@@ -42,8 +28,6 @@ SEMA = {
 
 
 def _rendszer_prompt(most, szandek):
-    # Segítségként megadjuk a következő 14 nap naptárát, mert a kis modellek
-    # rosszul számolják ki, melyik dátum a "jövő kedd".
     napok = "\n".join(
         f"  {(most + timedelta(days=i)).date().isoformat()} {NAPNEVEK[(most + timedelta(days=i)).weekday()]}"
         for i in range(14)

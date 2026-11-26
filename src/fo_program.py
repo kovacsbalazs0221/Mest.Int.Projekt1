@@ -1,22 +1,3 @@
-"""
-A teljes feldolgozási lánc:
-
-  mikrofon -> [1. Whisper: beszédfelismerés] -> átirat
-           -> [2. mDeBERTa: szándékfelismerés] -> esemény / emlékeztető / egyéb
-           -> [3. LLM (Ollama): adatkinyerés] -> JSON
-           -> [saját: dátumértelmezés + ellenőrzés] -> Esemeny
-           -> megerősítés -> Google Naptár
-
-Használat (a projekt gyökeréből):
-  python src/fo_program.py                    # felvétel mikrofonról (szóköz nyomva tartása)
-  python src/fo_program.py --fajl felvetel.wav
-  python src/fo_program.py --szoveg "Holnap délután 3-kor fogorvos"
-  python src/fo_program.py --proba            # nem ír a naptárba, csak kiírja
-  python src/fo_program.py --igen             # nem kér megerősítést
-
-A meglévő fut.py változatlan; ez egy új belépési pont.
-"""
-
 import argparse
 import json
 import sys
@@ -37,7 +18,6 @@ def atirat_megszerzese(args):
 
 
 def datum_bekerese():
-    """Ha nem derült ki a dátum, megkérdezzük (konzolon)."""
     while True:
         valasz = input("Nem derült ki a dátum. Add meg (ÉÉÉÉ-HH-NN), vagy Enter = kilépés: ").strip()
         if not valasz:
@@ -57,14 +37,12 @@ def main():
     p.add_argument("--nincs-szandek", action="store_true", help="kihagyja a szándékfelismerést")
     args = p.parse_args()
 
-    # 1. Beszédfelismerés
     atirat = atirat_megszerzese(args)
     if not atirat:
         print("Nincs átirat, kilépek.")
         return 1
     print(f"\n[1] Átirat: {atirat}")
 
-    # 2. Szándékfelismerés
     tipus = "esemeny"
     if not args.nincs_szandek:
         from szandek import BIZONYTALAN_KUSZOB, szandek
@@ -77,7 +55,6 @@ def main():
             print("Bizonytalan, eseményként folytatom.")
             tipus = "esemeny"
 
-    # 3. Adatkinyerés LLM-mel
     from adatkinyeres import OLLAMA_MODELL, kinyer
     most = datetime.now(IDOZONA)
     print(f"[3] Adatkinyerés ({OLLAMA_MODELL})...")
@@ -88,13 +65,11 @@ def main():
         return 1
     print("    LLM válasz:", json.dumps(llm, ensure_ascii=False))
 
-    # 4. Ellenőrzés, összevetés a szabályalapú értelmezéssel
     e = osszeallit(atirat, llm, most, tipus)
     if "datum" in e.hianyzik:
         d = datum_bekerese()
         if d is None:
             return 1
-        # újra összeállítjuk a megadott dátummal
         llm["datum"] = d.isoformat()
         e = osszeallit(atirat, llm, most, tipus)
 
@@ -111,7 +86,6 @@ def main():
         print("Megszakítva.")
         return 0
 
-    # 5. Google Naptár
     from naptar import letrehoz
     link = letrehoz(e)
     print(f"[5] Kész! {link}")

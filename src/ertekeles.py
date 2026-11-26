@@ -1,22 +1,3 @@
-"""
-A lánc 2-4. lépésének kiértékelése a tests/teszt_mondatok.json mondatain.
-
-Lépésenként méri a pontosságot:
-  - szándékfelismerés (mDeBERTa)
-  - csak LLM: dátum és kezdés
-  - csak szabályalapú értelmező: dátum és kezdés
-  - végeredmény (ellenőrzés után): dátum és kezdés
-
-Így a dokumentációban számokkal megmutatható, mit hoz a saját ellenőrző lépés.
-
-Futtatás (a projekt gyökeréből):
-  python src/ertekeles.py                 # minden lépés (kell hozzá az Ollama)
-  python src/ertekeles.py --nincs-llm     # csak szándék + szabályalapú
-  python src/ertekeles.py --nincs-szandek
-  python src/ertekeles.py --fajl tests/teszt_mondatok_fuggetlen.json
-  python src/ertekeles.py --mod modell     # szándék csak modellel (lásd szandek.py)
-"""
-
 import argparse
 import json
 from datetime import datetime

@@ -1,27 +1,3 @@
-"""
-2. modell: szándékfelismerés (zero-shot szövegosztályozás) + szabályalapú kapu.
-
-A Whisper átiratáról eldönti, hogy a felhasználó
-  - új eseményt/találkozót akar felvenni ("esemeny"),
-  - emlékeztetőt kér ("emlekezteto"), vagy
-  - a mondat nem naptárral kapcsolatos ("egyeb").
-
-Modell: MoritzLaurer/mDeBERTa-v3-base-mnli-xnli (többnyelvű NLI-modell).
-Zero-shot: nem tanítjuk, hanem minden címkéhez egy hipotézismondatot képez,
-és azt méri, mennyire következik a bemenetből. A modell többnyelvű, ezért a
-magyar mondathoz angol hipotézist adunk. A hangolásnál ez lett a legpontosabb
-(lásd szandek_hangolas.py).
-
-A hangolás azt mutatta, hogy a modell az "egyéb" (nem naptárügy) mondatokat
-nem ismeri fel megbízhatóan. Ezért a "hibrid" módban (ez az alapértelmezett)
-két szabály szűr előtte:
-  1. ha az átiratban nincs se dátum, se időpont (datum_ertelmezes.py) -> egyéb
-  2. ha a mondat kérdés, és nem emlékeztetőt kér -> egyéb
-A modell ezután csak az esemény/emlékeztető között dönt.
-
-Az első futtatáskor a modell letöltődik (~560 MB).
-"""
-
 import re
 from datetime import date
 
@@ -74,14 +50,6 @@ def _nli(atirat, cimkek):
 
 
 def szandek(atirat, mod="hibrid"):
-    """
-    Módok:
-      "modell"  - csak a zero-shot modell, 3 címkével
-      "hibrid3" - dátum/idő kapu, utána a modell 3 címkével
-      "hibrid"  - dátum/idő + kérdés kapu, utána a modell esemény/emlékeztető között dönt
-    Visszaad: (címke, valószínűség, pontok szótárban). A kapu döntésénél a pontok
-    között az "ok" kulcs mondja meg, melyik szabály döntött.
-    """
     if mod in ("hibrid", "hibrid3"):
         ok = szabaly_kapu(atirat, kerdes_szabaly=(mod == "hibrid"))
         if ok:
